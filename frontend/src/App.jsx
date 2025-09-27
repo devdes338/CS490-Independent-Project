@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { useEffect} from 'react';
 import axios from "axios";
 import './App.css';
+import FilmDetail from './FilmDetail';
 
 function App() {
   const [films, setFilms] = useState([]);
+  const [selectedFilm, setSelectedFilm] = useState(null);
 
   useEffect (() => {
     axios.get('http://localhost:3000/top-films').then(res => {
@@ -15,8 +17,12 @@ function App() {
     })
   }, []);
 
+  const handleFilmClick = (film) => {
+    setSelectedFilm(film);
+  }
+
   const listFilms = films.map(film =>
-    <div key={film.film_id}>
+    <div key={film.film_id} onClick={() => handleFilmClick(film)}>
       {film.title}
     </div>
   );
@@ -27,8 +33,9 @@ function App() {
       <div>
           {listFilms}
       </div>
+      {selectedFilm && <FilmDetail film={selectedFilm}/>}
     </>
   )
-}
+};
 
 export default App
