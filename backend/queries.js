@@ -8,3 +8,8 @@ group by film.film_id, category.name
 order by rented desc
 limit 5;
 `;
+
+export const search = `select film.film_id, film.title, category.name, 
+inner join 
+;
+`;

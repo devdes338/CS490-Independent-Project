@@ -1,37 +1,48 @@
 import express from "express";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
-import { createConnection } from 'mysql2/promise';
-import bodyParser from 'body-parser';
+import { createPool } from 'mysql2/promise';
+import { topRentedFilms } from "./queries.js";
 import dotenv from 'dotenv';
-dotenv.config();
+import cors from "cors";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const corsOptions = {
+  origin: ["http://localhost:5173"]
+};
+dotenv.config();
 
 const app = express();
 const port = 3000;
 
-app.use(bodyParser.json);
+app.use(cors(corsOptions));
+app.use(express.json());
 
-try {
   // create the connection to database
-  const connection = await createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-  });
+let pool = createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10
+});
 
+app.get("/top-films", async (req, res) => {
+  try {
+    const [rows] = await pool.query(topRentedFilms);
+    res.json(rows);
+  } catch (err) {
+    console.error("DB query error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
 
-    console.log();
-    await connection.end();
-    
-} catch (err) {
-  console.log(err);
-}
-
-app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname, "../frontend/index.html"));
+app.get("/search", async (req, res) => {
+  try {
+    const [rows] = await pool.query(topRentedFilms);
+    res.json(rows);
+  } catch (err) {
+    console.error("DB query error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
 });
 
 app.listen(port, () => {
