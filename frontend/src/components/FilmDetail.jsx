@@ -8,7 +8,6 @@ function FilmDetail({ film }) {
             <h2>{film.title}</h2>
             <h3>{film.name}</h3>
             <p>{film.description}</p>
-            <p>Rented: {film.rented}</p>
         </div>
     );
 }

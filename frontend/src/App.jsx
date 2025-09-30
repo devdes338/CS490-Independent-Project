@@ -2,7 +2,7 @@ import Nav from "./Nav";
 import Home from "./pages/Home";
 import Films from "./pages/Films";
 import Customer from "./pages/Customer";
-import './App.css';
+import './styling/App.css';
 
 function App() {
   let Component;

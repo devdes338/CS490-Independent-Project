@@ -1,0 +1,9 @@
+.film-five {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.top-film {
+    background: #fff;
+}
