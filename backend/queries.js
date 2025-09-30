@@ -1,7 +1,8 @@
-export const topRentedFilms = `select film.film_id, film.title, category.name, film_text.description,count(rental.rental_id) as rented
+export const topRentedFilms = `select film.film_id, film.title, category.name, film.release_year, language.name as lang, film.rating, film.special_features,film_text.description, count(rental.rental_id) as rented
 from sakila.film
 inner join sakila.film_category on film.film_id=film_category.film_id
 inner join sakila.category on film_category.category_id=category.category_id
+inner join sakila.language on film.language_id=language.language_id 
 inner join sakila.inventory on film.film_id=inventory.film_id
 inner join sakila.rental on inventory.inventory_id=rental.inventory_id
 inner join sakila.film_text on film.film_id=film_text.film_id
@@ -28,7 +29,7 @@ group by film.film_id
 order by rented desc
 limit 5;`;
 
-export const searchResults = `select distinct film.film_id, film.title, cat.name, film_text.description,count(distinct rental.rental_id) as rented
+export const searchResults = `select distinct film.film_id, film.title, cat.name, film.release_year, film.rating, film.special_features, language.name as lang, film_text.description,count(distinct rental.rental_id) as rented
 from sakila.film as film
 inner join sakila.film_category on film.film_id=sakila.film_category.film_id
 inner join sakila.category as cat on sakila.film_category.category_id=cat.category_id
@@ -37,6 +38,7 @@ inner join sakila.rental on inventory.inventory_id=rental.inventory_id
 inner join sakila.film_text on film.film_id=film_text.film_id
 inner join sakila.film_actor on sakila.film.film_id=sakila.film_actor.film_id
 inner join sakila.actor on sakila.film_actor.actor_id=sakila.actor.actor_id
+inner join sakila.language on film.language_id=language.language_id
 where upper(film.title) like upper(?) or upper(cat.name) like upper(?) or upper(actor.first_name) like upper(?) or upper(actor.last_name) like upper(?)
 group by film.film_id, cat.name;`;
 

@@ -1,18 +1,18 @@
-.film-five {
+.actor-five {
     display: flex;
     justify-content: center;
     gap: 1rem;
 }
 
-.top-film {
+.top-actor {
     background: #fff;
     border-style: solid;
     border-radius: 25px;
     border-color: black;
-    width: 50%;
+    width: 50%
 }
 
-.clickable {
+.clickable  {
     cursor: pointer;
     transition: background .12s ease, transform .06s ease;
 }

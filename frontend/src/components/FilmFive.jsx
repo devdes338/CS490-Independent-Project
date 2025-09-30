@@ -3,6 +3,7 @@ import { useEffect} from 'react';
 import axios from "axios";
 import FilmDetail from './FilmDetail';
 import "../styling/FilmFive.css";
+import "../styling/popup.css";
 
 function FilmFive() {
   const [films, setFilms] = useState([]);
@@ -22,9 +23,9 @@ function FilmFive() {
   }
 
   const listFilms = films.map(film =>
-    <div key={film.film_id} onClick={() => handleFilmClick(film)} className="top-film">
+    <div key={film.film_id} onClick={() => handleFilmClick(film)} className="top-film clickable">
       <p>{film.title}</p>
-      <p>{film.rented}</p>
+      <p>{film.rented} People Rented</p>
     </div>
   );
 
@@ -34,7 +35,7 @@ function FilmFive() {
       <div className="film-five">
           {listFilms}
       </div>
-      {selectedFilm && <FilmDetail film={selectedFilm}/>}
+      {selectedFilm && <FilmDetail film={selectedFilm} className="popup"/>}
     </>
   )
 };
