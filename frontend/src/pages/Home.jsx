@@ -1,13 +1,13 @@
 import FilmFive from "../components/FilmFive";
 import ActorFive from "../components/ActorFive";
+import "../styling/Home.css";
 
 function Home() {
     return(
-        <>
-            <h1>Home</h1>
+        <div className="home-layout">
             <FilmFive />
             <ActorFive />
-        </>
+        </div>
     );
 
 }

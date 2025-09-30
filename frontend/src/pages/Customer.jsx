@@ -1,5 +1,12 @@
+import CustomerList from "../components/CustomerList";
+
 function Customer() {
-    return <h1>Customer</h1>
+    return (
+        <>
+            <h1>Customer</h1>
+            <CustomerList />
+        </>
+    );
 
 }
 

@@ -1,0 +1,20 @@
+.film-details-a {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.description-features {
+    width: 50%;
+    border-style: double;
+}
+
+.description {
+    width:50%;
+    margin-left:25%;
+    margin-top: 5%;
+}
+
+.features {
+    margin-bottom: 5%;
+}

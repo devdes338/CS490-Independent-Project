@@ -3,6 +3,9 @@ import { createPool } from 'mysql2/promise';
 import { topRentedFilms } from "./queries.js";
 import { topActors } from "./queries.js";
 import { actorTopFilms } from "./queries.js";
+import { searchResults } from "./queries.js";
+import { filmStock } from "./queries.js";
+import { customerList } from "./queries.js";
 import dotenv from 'dotenv';
 import cors from "cors";
 
@@ -60,9 +63,63 @@ app.post("/actor-top-films", async (req, res) => {
   }
 });
 
-app.get("/search", async (req, res) => {
+app.post("/search", async (req, res) => {
   try {
-    const [rows] = await pool.query(topRentedFilms);
+    //Retrieve query, sanatize, and prepare wildcards
+    const { query } = req.body;
+
+    if (!query || typeof query !== "string" || query.trim() === "") {
+      return res.status(400).json({ error: "Search query required" });
+    }
+
+    const sanitized = query.trim();
+    const wildcard = `%${sanitized}%`;
+    const params = [wildcard, wildcard, wildcard, wildcard];
+    /*Array(4).fill(wildcard);*/
+
+    const [rows] = await pool.query(searchResults, params);
+    res.json(rows);
+  } catch (err) {
+    console.error("DB query error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+app.post("/film-stock", async(req, res) => {
+
+  try {
+    const { film_id } = req.body;
+    if (!film_id) return res.status(400).json({error: "film required"});
+
+    const [rows] = await pool.query(filmStock, [film_id]);
+    if (!rows || rows.length === 0) {
+      return res.status(404).json({ stock: 0, total_copies: 0, currently_rented: 0 });
+    }
+
+    const row = rows[0];
+
+    res.json({
+      stock: row.stock ?? 0,
+      total_copies: row.total_copies ?? 0,
+      currently_rented: row.currently_rented ?? 0,
+      film_id: row.film_id,
+      title: row.title
+    });
+
+  } catch (err) {
+    console.error("DB query error:", err);
+    res.status(500).json({ error: "Database error" });
+  }
+
+});
+
+app.post('/rentFilm', async (req, res) => {
+
+});
+
+app.get('/customer', async (req, res) => {
+  try {
+    const [rows] = await pool.query(customerList);
     res.json(rows);
   } catch (err) {
     console.error("DB query error:", err);

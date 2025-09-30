@@ -1,0 +1,15 @@
+.actor-top-films-name {
+    margin-top:2%;
+}
+
+.actor-top-films {
+    display:flex;
+    flex-direction:column;
+    gap:rem;
+    border-style: double;
+    border-radius: 25px;
+    width: 25%;
+    margin: 0 auto;
+    margin-top: 1%;
+    align-content: center;
+}
