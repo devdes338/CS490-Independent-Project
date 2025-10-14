@@ -1,6 +1,46 @@
-.popup {
-    background: #fff;
-    width: 75%;
-    margin: auto;
-    box-shadow:  0 6px 20px rgba(2,6,23,0.06);
+.popup .overlay {
+    position: fixed;
+    top:0px;
+    left: 0px;
+    width:100vw;
+    height:100vh;
+    background:rgba(0,0,0,0.7);
+    z-index:1;
+    display:none;
+}
+
+.popup .content {
+    position:absolute;
+    top:60%;
+    left:50%;
+    transform: translate(-50%,-50%) scale(0);
+    background:#fff;
+    width:600px;
+    height:800px;
+    z-index:2;
+    text-align:center;
+    padding:20px;
+    box-sizing:border-box;
+}
+
+.popup .close-btn {
+    position:absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30%;
+}
+
+.popup.active .overlay {
+    display:block;
+}
+
+.popup.active .content {
+    transition:all 300ms ease-in-out;
+    transform: translate(-50%,-50%) scale(1);
+}
+
+.clickable {
+  cursor: pointer;
+  transition: background .12s ease, transform .06s ease;
 }
