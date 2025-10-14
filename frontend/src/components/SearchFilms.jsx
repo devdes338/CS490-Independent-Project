@@ -23,7 +23,7 @@ function SearchFilms() {
 
         setError('');
 
-        axios.post("http://localhost:3000/search", {query : searchQuery.trim()}).then(res => {
+        axios.post("http://localhost:3000/search-films", {query : searchQuery.trim()}).then(res => {
             setSearchResults(res.data);
             console.log(res.data);
         }).catch(err => {
